@@ -43,7 +43,6 @@ export default function GiphySearch() {
   const cast = async (url: string): Promise<string | undefined> => {
     try {
       const result = await sdk.actions.composeCast({
-        text: "\n",
         embeds: [`${url}`],
       });
 
