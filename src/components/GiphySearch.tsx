@@ -36,7 +36,14 @@ export default function GiphySearch() {
       : gf.trending({ offset, limit: 10 });
 
   const searchParams = useSearchParams();
-  const castHash = searchParams.get("castHash");
+  const castH = searchParams.get("castHash");
+  const [castHash, setCastHash] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (castH) {
+      setCastHash(castH);
+    }
+  }, [context, castH]);
 
   const casting = async (url: string) => {
     if (castHash) {
