@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
         name: "GIF",
         url: `${appUrl}`,
         splashImageUrl: `${appUrl}/logo.png`,
-        splashBackgroundColor: "#FFFFFF",
+        splashBackgroundColor: "#333333",
       },
     },
   };
