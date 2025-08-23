@@ -1,4 +1,4 @@
-# Farcaster Pro – A Farcaster Mini App to subscribe for Farcaster Pro
+# GIF – A Farcaster Mini App to search and add GIFs to casts
 
 This is a **Mini App** built for [**Farcaster**](https://farcaster.xyz), a decentralized social media protocol to add **GIFs** to Posts
 
