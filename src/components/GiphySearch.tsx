@@ -81,7 +81,7 @@ export default function GiphySearch() {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setSearchTerm(e.target.value)
           }
-          className="w-full max-w-md p-2 mb-4 text-lg border border-gray-300 rounded"
+          className="w-full max-w-md p-2 mb-4 text-lg border border-gray-300 rounded text-white"
         />
         <Grid
           width={350}
