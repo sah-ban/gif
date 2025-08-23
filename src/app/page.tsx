@@ -1,5 +1,6 @@
 import GiphySearch from "@/components/GiphySearch";
 import { Metadata } from "next";
+import Image from "next/image";
 
 const appUrl = process.env.NEXT_PUBLIC_URL;
 
@@ -44,7 +45,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home() {
   return (
     <div className="min-h-screen w-full p-4 text-center bg-slate-800">
-      <h1 className="text-3xl font-bold mb-4 text-white">Gif</h1>
+      <h1 className="mb-4"></h1>
+      <Image width={120} height={32} src="/attribution.gif" alt="GIF Logo" className="absolute top-0 right-0" />
       <GiphySearch />
     </div>
   );
