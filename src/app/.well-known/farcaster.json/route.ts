@@ -15,6 +15,8 @@ export async function GET() {
       buttonTitle: "Open GIF Explorer",
       splashImageUrl: `${appUrl}/logo.png`,
       splashBackgroundColor: "#333333",
+      description: "Search and cast GIFs on Farcaster",
+      primaryCategory: "utility",
     },
     baseBuilder: {
       allowedAddresses: ["0x06e5B0fd556e8dF43BC45f8343945Fb12C6C3E90"],
