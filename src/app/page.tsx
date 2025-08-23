@@ -8,7 +8,7 @@ export const revalidate = 300;
 export async function generateMetadata(): Promise<Metadata> {
   const frame = {
     version: "next",
-    imageUrl: `${appUrl}/logo.png`,
+    imageUrl: `${appUrl}/og.gif`,
     button: {
       title: "Open GIF Search",
       action: {
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Search and share GIFs on Farcaster",
       images: [
         {
-          url: `${appUrl}/og.png`,
+          url: `${appUrl}/og.gif`,
           width: 1200,
           height: 630,
           alt: "GIF Search",
