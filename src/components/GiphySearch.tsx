@@ -53,6 +53,12 @@ export default function GiphySearch() {
     }
   };
 
+  useEffect(() => {
+    if (!context?.client.added) {
+      sdk.actions.addFrame();
+    }
+  }, [context?.client.added]);
+
   if (!context)
     return (
       <div className="flex items-center justify-center h-screen bg-gray-900">
