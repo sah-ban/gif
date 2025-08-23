@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
     version: "next",
     imageUrl: `${appUrl}/og.gif`,
     button: {
-      title: "Open GIF Search",
+      title: "Open GIF Explorer",
       action: {
         type: "launch_frame",
         name: "GIF",

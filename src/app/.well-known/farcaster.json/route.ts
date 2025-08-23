@@ -12,7 +12,7 @@ export async function GET() {
       name: "GIF",
       iconUrl: `${appUrl}/logo.png`,
       homeUrl: appUrl,
-      buttonTitle: "OPen GIF Search",
+      buttonTitle: "Open GIF Explorer",
       splashImageUrl: `${appUrl}/logo.png`,
       splashBackgroundColor: "#333333",
     },
