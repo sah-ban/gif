@@ -34,7 +34,12 @@ export default function GiphySearch() {
       ? gf.search(searchTerm, { offset, limit: 10 })
       : gf.trending({ offset, limit: 10 });
 
-
+  const casting = async (url: string) => {
+    const hash = await cast(url);
+    if (hash) {
+      sdk.actions.close();
+    }
+  };
   const cast = async (url: string): Promise<string | undefined> => {
     try {
       const result = await sdk.actions.composeCast({
@@ -72,7 +77,7 @@ export default function GiphySearch() {
             e: React.SyntheticEvent<HTMLElement, Event>
           ) => {
             e.preventDefault();
-            cast(gif.images.original.url);
+            casting(gif.images.original.url);
           }}
         />
       </div>
