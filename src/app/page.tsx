@@ -1,6 +1,7 @@
-import GiphySearch from "@/components/GiphySearch";
 import { Metadata } from "next";
 import Image from "next/image";
+import App from "@/app/app";
+
 
 const appUrl = process.env.NEXT_PUBLIC_URL;
 
@@ -47,7 +48,7 @@ export default function Home() {
     <div className="min-h-screen w-full p-4 text-center bg-slate-800">
       <h1 className="mb-4"></h1>
       <Image width={120} height={32} src="/attribution.gif" alt="GIF Logo" className="absolute top-0 right-0" />
-      <GiphySearch />
+      <App />
     </div>
   );
 }
