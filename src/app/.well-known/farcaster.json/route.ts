@@ -3,9 +3,11 @@ export async function GET() {
 
   const config = {
     accountAssociation: {
-      header: "eyJmaWQiOjI2ODQzOCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDIxODA4RUUzMjBlREY2NGMwMTlBNmJiMEY3RTRiRkIzZDYyRjA2RWMifQ",
+      header:
+        "eyJmaWQiOjI2ODQzOCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDIxODA4RUUzMjBlREY2NGMwMTlBNmJiMEY3RTRiRkIzZDYyRjA2RWMifQ",
       payload: "eyJkb21haW4iOiJmYy1naWYudmVyY2VsLmFwcCJ9",
-      signature: "MHg3ODFmMjhhNDk2NDY2ZWQ3OTBlN2ZlMWE5ODYxMWQ2NTQ1MTk5ZWZiYzM0ZTk1MWM4MTVkM2FmZTAxZTFjYzkyNTQ5NjZhOGZiODY3NDQ1OGNlMDFiMDIzNGVjMWVhNzM2ODkwZjI4Zjc3ZmQzN2JkYmM0N2RmZDE3NzY3MGQ5NjFj",
+      signature:
+        "MHg3ODFmMjhhNDk2NDY2ZWQ3OTBlN2ZlMWE5ODYxMWQ2NTQ1MTk5ZWZiYzM0ZTk1MWM4MTVkM2FmZTAxZTFjYzkyNTQ5NjZhOGZiODY3NDQ1OGNlMDFiMDIzNGVjMWVhNzM2ODkwZjI4Zjc3ZmQzN2JkYmM0N2RmZDE3NzY3MGQ5NjFj",
     },
     frame: {
       version: "1",
@@ -17,6 +19,7 @@ export async function GET() {
       splashBackgroundColor: "#333333",
       description: "Search and cast GIFs on Farcaster",
       primaryCategory: "utility",
+      castShareUrl: appUrl,
     },
     baseBuilder: {
       allowedAddresses: ["0x06e5B0fd556e8dF43BC45f8343945Fb12C6C3E90"],

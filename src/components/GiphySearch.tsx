@@ -5,6 +5,7 @@ import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Grid } from "@giphy/react-components";
 import { IGif } from "@giphy/js-types";
 import sdk, { type Context } from "@farcaster/miniapp-sdk";
+import { useSearchParams } from "next/navigation";
 
 export default function GiphySearch() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
@@ -34,10 +35,19 @@ export default function GiphySearch() {
       ? gf.search(searchTerm, { offset, limit: 10 })
       : gf.trending({ offset, limit: 10 });
 
+  const searchParams = useSearchParams();
+  const castHash = searchParams.get("castHash");
+
   const casting = async (url: string) => {
-    const hash = await cast(url);
-    if (hash) {
-      sdk.actions.close();
+    if (castHash) {
+      sdk.actions.openUrl(
+        `https://farcaster.xyz/~/compose?embeds[]=${url}&parentCastHash=${castHash}`
+      );
+    } else {
+      const hash = await cast(url);
+      if (hash) {
+        sdk.actions.close();
+      }
     }
   };
   const cast = async (url: string): Promise<string | undefined> => {
