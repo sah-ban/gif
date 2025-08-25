@@ -20,6 +20,7 @@ export async function GET() {
       description: "Search and cast GIFs on Farcaster",
       primaryCategory: "utility",
       castShareUrl: appUrl,
+      webhookUrl: `${appUrl}/api/webhook`,
     },
     baseBuilder: {
       allowedAddresses: ["0x06e5B0fd556e8dF43BC45f8343945Fb12C6C3E90"],
