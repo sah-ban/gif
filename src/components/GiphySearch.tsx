@@ -120,7 +120,7 @@ export default function GiphySearch() {
       {castHash && profileData?.username && (
         <div className="mb-4">
           <div className="text-white mb-4">Replying to @{profileData?.username}</div>
-          <div className="bg-[#192734] text-white rounded-2xl shadow-lg max-w-xl w-full border border-[#2F3336]">
+          <div className="bg-[#16101e] text-white rounded-2xl shadow-lg max-w-xl w-full border border-[#2F3336]">
             <FarcasterEmbed username={profileData?.username} hash={castHash} />
           </div>
         </div>
