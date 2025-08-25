@@ -74,21 +74,21 @@ export default function GiphySearch() {
     }
   }, [context?.client.added]);
 
-  useEffect(() => {
-    if (castFid) {
-      (async () => {
-        try {
-          const response = await axios.get(
-            `https://api.farcaster.xyz/v2/user?fid=${castFid}`
-          );
-          const username = response.data?.result?.user?.username;
-          setUsername(username);
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
-      })();
+useEffect(() => {
+  (async () => {
+    try {
+      if (castFid) {
+        const response = await axios.get(
+          `https://api.farcaster.xyz/v2/user?fid=${castFid}`
+        );
+        const username = response.data?.result?.user?.username;
+        setUsername(username);
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
     }
-  }, [castFid]);
+  })();
+}, []); 
 
   if (!context)
     return (
