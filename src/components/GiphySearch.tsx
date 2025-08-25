@@ -7,6 +7,7 @@ import { IGif } from "@giphy/js-types";
 import sdk, { type Context } from "@farcaster/miniapp-sdk";
 import { useSearchParams } from "next/navigation";
 import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
+import "react-farcaster-embed/dist/styles.css";
 import axios from "axios";
 
 export default function GiphySearch() {
@@ -108,7 +109,7 @@ export default function GiphySearch() {
     <div className="">
       {castHash && username && (
         <div className="mb-4">
-          <div className="text-center text-white mb-4">
+          <div className="text-white mb-4">
             Replying to @{username}
           </div>
           <div className="bg-[#192734] text-white rounded-2xl shadow-lg max-w-xl w-full border border-[#2F3336]">
