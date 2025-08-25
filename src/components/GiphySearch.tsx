@@ -6,10 +6,13 @@ import { Grid } from "@giphy/react-components";
 import { IGif } from "@giphy/js-types";
 import sdk, { type Context } from "@farcaster/miniapp-sdk";
 import { useSearchParams } from "next/navigation";
+import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
+import axios from "axios";
 
 export default function GiphySearch() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.MiniAppContext>();
+  const [username, setUsername] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const load = async () => {
@@ -37,6 +40,13 @@ export default function GiphySearch() {
 
   const searchParams = useSearchParams();
   const castHash = searchParams.get("castHash");
+  const castFid = searchParams.get("castFid");
+
+  useEffect(() => {
+    if (castFid) {
+      user(castFid);
+    }
+  }, [castFid]);
 
   const casting = async (url: string) => {
     if (castHash) {
@@ -69,6 +79,14 @@ export default function GiphySearch() {
     }
   }, [context?.client.added]);
 
+  const user = async (fid: string) => {
+    const response = await axios.get(
+      `https://api.farcaster.xyz/v2/user?fid=${fid}`
+    );
+    const username = response.data?.result?.user?.username;
+    setUsername(username);
+  };
+
   if (!context)
     return (
       <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -88,6 +106,16 @@ export default function GiphySearch() {
 
   return (
     <div className="">
+      {castHash && username && (
+        <div className="mb-4">
+          <div className="text-center text-white mb-4">
+            Replying to @{username}
+          </div>
+          <div className="bg-[#192734] text-white rounded-2xl shadow-lg max-w-xl w-full border border-[#2F3336]">
+            <FarcasterEmbed username={username} hash={castHash} />
+          </div>
+        </div>
+      )}
       <div className="text-center">
         <input
           type="text"
