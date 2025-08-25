@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Grid } from "@giphy/react-components";
 import { IGif } from "@giphy/js-types";
@@ -8,12 +8,10 @@ import sdk, { type Context } from "@farcaster/miniapp-sdk";
 import { useSearchParams } from "next/navigation";
 import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 import "react-farcaster-embed/dist/styles.css";
-import axios from "axios";
 
 export default function GiphySearch() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.MiniAppContext>();
-  const [username, setUsername] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const load = async () => {
@@ -74,21 +72,31 @@ export default function GiphySearch() {
     }
   }, [context?.client.added]);
 
-useEffect(() => {
-  (async () => {
+  interface ProfileResponse {
+    username: string;
+  }
+  const [profileData, setProfileData] = useState<ProfileResponse>();
+
+  const fetchProfile = useCallback(async (fid: string) => {
     try {
-      if (castFid) {
-        const response = await axios.get(
-          `https://api.farcaster.xyz/v2/user?fid=${castFid}`
-        );
-        const username = response.data?.result?.user?.username;
-        setUsername(username);
+      const profileResponse = await fetch(`/api/profile?fid=${fid}`);
+      if (!profileResponse.ok) {
+        throw new Error(`Fid HTTP error! Status: ${profileResponse.status}`);
       }
-    } catch (error) {
-      console.error("Error fetching user:", error);
+      const profileResponseData = await profileResponse.json();
+      setProfileData({
+        username: profileResponseData.username,
+      });
+    } catch (err) {
+      console.error("Error fetching profile data", err);
     }
-  })();
-}, []); 
+  }, []);
+
+  useEffect(() => {
+    if (castFid) {
+      fetchProfile(castFid);
+    }
+  }, [context]);
 
   if (!context)
     return (
@@ -109,11 +117,11 @@ useEffect(() => {
 
   return (
     <div className="">
-      {castHash && username && (
+      {castHash && profileData?.username && (
         <div className="mb-4">
-          <div className="text-white mb-4">Replying to @{username}</div>
+          <div className="text-white mb-4">Replying to @{profileData?.username}</div>
           <div className="bg-[#192734] text-white rounded-2xl shadow-lg max-w-xl w-full border border-[#2F3336]">
-            <FarcasterEmbed username={username} hash={castHash} />
+            <FarcasterEmbed username={profileData?.username} hash={castHash} />
           </div>
         </div>
       )}
