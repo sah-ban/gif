@@ -47,7 +47,7 @@ export default function GiphySearch() {
     if (castFid) {
       user(castFid);
     }
-  }, [castFid]);
+  }, [context, castFid]);
 
   const casting = async (url: string) => {
     if (castHash) {
