@@ -45,46 +45,47 @@ export default function GiphySearch() {
 
   const casting = async (url: string) => {
     if (castHash && selected === "Replying to") {
-      sdk.actions.openUrl(
-        `https://farcaster.xyz/~/compose?embeds[]=${url}&parentCastHash=${castHash}`
-      );
+      reply(url, castHash);
     } else if (castHash && selected === "Quote Casting") {
-      const hash = await quote(url, castHash.slice(0, 10));
-      if (hash) {
-        sdk.actions.close();
-      }
+      quote(url, castHash.slice(0, 10));
     } else {
-      const hash = await cast(url);
-      if (hash) {
-        sdk.actions.close();
-      }
+      cast(url);
     }
   };
-  const cast = async (url: string): Promise<string | undefined> => {
+  const cast = async (url: string) => {
     try {
-      const result = await sdk.actions.composeCast({
+      await sdk.actions.composeCast({
         embeds: [url],
+        close: true,
       });
+    } catch (error) {
+      console.error("Error composing cast:", error);
+      return undefined;
+    }
+  };
 
-    return result.cast?.hash;
-  } catch (error) {
-    console.error("Error composing cast:", error);
-    return undefined;
-  }
-};
-
-  const quote = async (url: string, hash: string): Promise<string | undefined> => {
+  const quote = async (url: string, hash: string) => {
     try {
-      const result = await sdk.actions.composeCast({
+      await sdk.actions.composeCast({
         embeds: [url, `https://farcaster.xyz/${profileData?.username}/${hash}`],
+        close: true,
       });
-
-    return result.cast?.hash;
-  } catch (error) {
-    console.error("Error composing cast:", error);
-    return undefined;
-  }
-};
+    } catch (error) {
+      console.error("Error composing cast:", error);
+      return undefined;
+    }
+  };
+  const reply = async (url: string, hash: string) => {
+    try {
+      await sdk.actions.composeCast({
+        embeds: [url],
+        parent: { type: "cast", hash },
+        close: true,
+      });
+    } catch (error) {
+      console.error("Error composing cast:", error);
+    }
+  };
 
   useEffect(() => {
     if (!context?.client.added) {
@@ -128,7 +129,9 @@ export default function GiphySearch() {
           </p>
           <div
             className="flex items-center justify-center text-center bg-indigo-800 p-3 rounded-lg mt-4 cursor-pointer"
-            onClick={() => window.open("https://farcaster.xyz/cashlessman.eth/0x094169d9")}
+            onClick={() =>
+              window.open("https://farcaster.xyz/cashlessman.eth/0x094169d9")
+            }
           >
             Open in Farcaster
           </div>
