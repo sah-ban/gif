@@ -119,22 +119,22 @@ export default function GiphySearch() {
     }
   }, [context]);
 
-  // if (!context)
-  //   return (
-  //     <div className="flex items-center justify-center h-screen bg-gray-900">
-  //       <div className="flex flex-col items-center justify-center text-white text-2xl p-4">
-  //         <p className="flex items-center justify-center text-center">
-  //           You need to access this mini app from inside a farcaster client
-  //         </p>
-  //         <div
-  //           className="flex items-center justify-center text-center bg-indigo-800 p-3 rounded-lg mt-4 cursor-pointer"
-  //           onClick={() => window.open("https://farcaster.xyz/cashlessman.eth")}
-  //         >
-  //           Open in Farcaster
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
+  if (!context)
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-900">
+        <div className="flex flex-col items-center justify-center text-white text-2xl p-4">
+          <p className="flex items-center justify-center text-center">
+            You need to access this mini app from inside a farcaster client
+          </p>
+          <div
+            className="flex items-center justify-center text-center bg-indigo-800 p-3 rounded-lg mt-4 cursor-pointer"
+            onClick={() => window.open("https://farcaster.xyz/cashlessman.eth/0x094169d9")}
+          >
+            Open in Farcaster
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <div className="">
