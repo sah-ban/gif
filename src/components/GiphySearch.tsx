@@ -43,7 +43,6 @@ export default function GiphySearch() {
   const castHash = searchParams.get("castHash");
   const castFid = searchParams.get("castFid");
 
-
   const casting = async (url: string) => {
     if (castHash) {
       sdk.actions.openUrl(
@@ -75,17 +74,21 @@ export default function GiphySearch() {
     }
   }, [context?.client.added]);
 
-  if (castFid) {
-    user(castFid);
-  }
-
-  async function user(fid: string) {
-    const response = await axios.get(
-      `https://api.farcaster.xyz/v2/user?fid=${fid}`
-    );
-    const username = response.data?.result?.user?.username;
-    setUsername(username);
-  }
+  useEffect(() => {
+    if (castFid) {
+      (async () => {
+        try {
+          const response = await axios.get(
+            `https://api.farcaster.xyz/v2/user?fid=${castFid}`
+          );
+          const username = response.data?.result?.user?.username;
+          setUsername(username);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      })();
+    }
+  }, [castFid]);
 
   if (!context)
     return (
