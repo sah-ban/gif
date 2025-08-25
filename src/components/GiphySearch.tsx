@@ -43,11 +43,6 @@ export default function GiphySearch() {
   const castHash = searchParams.get("castHash");
   const castFid = searchParams.get("castFid");
 
-  useEffect(() => {
-    if (castFid) {
-      user(castFid);
-    }
-  }, [context, castFid]);
 
   const casting = async (url: string) => {
     if (castHash) {
@@ -80,13 +75,17 @@ export default function GiphySearch() {
     }
   }, [context?.client.added]);
 
-  const user = async (fid: string) => {
+  if (castFid) {
+    user(castFid);
+  }
+
+  async function user(fid: string) {
     const response = await axios.get(
       `https://api.farcaster.xyz/v2/user?fid=${fid}`
     );
     const username = response.data?.result?.user?.username;
     setUsername(username);
-  };
+  }
 
   if (!context)
     return (
@@ -109,9 +108,7 @@ export default function GiphySearch() {
     <div className="">
       {castHash && username && (
         <div className="mb-4">
-          <div className="text-white mb-4">
-            Replying to @{username}
-          </div>
+          <div className="text-white mb-4">Replying to @{username}</div>
           <div className="bg-[#192734] text-white rounded-2xl shadow-lg max-w-xl w-full border border-[#2F3336]">
             <FarcasterEmbed username={username} hash={castHash} />
           </div>
