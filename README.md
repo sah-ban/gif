@@ -7,6 +7,7 @@ This is a **Mini App** built for [**Farcaster**](https://farcaster.xyz), a decen
 - Displays Trending GIFs
 - Search GIFs by keywords
 - One click to Post
+- Use Share extension to Reply and Quote 
 
 
 ![og](public/og.gif)
