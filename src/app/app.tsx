@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 
-const GiphySearch = dynamic(() => import("@/components/GiphySearch"), {
+const Tenor = dynamic(() => import("@/components/Tenor"), {
   ssr: false,
 });
 
 export default function App() {
-  return <GiphySearch />;
+  return <Tenor />;
 }

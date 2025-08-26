@@ -46,8 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home() {
   return (
     <div className="min-h-screen w-full p-4 bg-slate-800">
-      <h1 className="mb-4"></h1>
-      <Image width={120} height={32} src="/attribution.gif" alt="GIF Logo" className="absolute top-0 right-0" />
+
       <App />
     </div>
   );
