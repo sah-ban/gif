@@ -63,7 +63,7 @@ export default function GiphySearch() {
             )}&key=${key}&pos=${pos || ""}&limit=20`
           : `https://tenor.googleapis.com/v2/featured?key=${key}&pos=${
               pos || ""
-            }&limit=10`;
+            }&limit=20`;
         const response = await axios.get(url);
         const data = response.data;
         console.log(
