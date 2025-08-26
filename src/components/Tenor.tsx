@@ -60,7 +60,7 @@ export default function GiphySearch() {
         const url = query
           ? `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(
               query
-            )}&key=${key}&pos=${pos || ""}&limit=10`
+            )}&key=${key}&pos=${pos || ""}&limit=20`
           : `https://tenor.googleapis.com/v2/featured?key=${key}&pos=${
               pos || ""
             }&limit=10`;
