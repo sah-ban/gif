@@ -7,6 +7,7 @@ import sdk, { type Context } from "@farcaster/miniapp-sdk";
 import { useSearchParams } from "next/navigation";
 import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 import "react-farcaster-embed/dist/styles.css";
+import Masonry from 'react-masonry-css';
 
 interface TenorGif {
   id: string;
@@ -256,27 +257,38 @@ export default function GiphySearch() {
         className="w-full max-w-md p-2 mb-4 text-lg border border-gray-300 rounded text-white"
       />
       {error && <div className="text-red-500 mb-4">{error}</div>}
-      <div className="grid grid-cols-3 gap-2 max-w-[350px] mx-auto">
-        {gifs.length > 0
-          ? gifs.map((gif, index) => (
-              <div
-                key={`${gif.id}-${index}`}
-                className="relative w-full aspect-square overflow-hidden rounded"
-              >
-                <Image
-                  src={gif.media_formats.tinygif.url}
-                  alt="Tenor GIF"
-                  width={gif.media_formats.tinygif.dims[0]}
-                  height={gif.media_formats.tinygif.dims[1]}
-                  className="absolute inset-0 w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform"
-                  unoptimized
-                  priority={index < 3}
-                  onClick={() => casting(gif.media_formats.gif.url)}
-                />
-              </div>
-            ))
-          : !loading && <p className="text-gray-500">No GIFs found</p>}
-      </div>
+
+      <Masonry
+        breakpointCols={3}
+        className="flex gap-1 max-w-[320px] mx-auto"
+        columnClassName="flex flex-col gap-1"
+      >
+        {gifs.length > 0 ? (
+          gifs.map((gif, index) => (
+            <div
+              key={`${gif.id}-${index}`} // Unique key
+              className="relative w-full rounded overflow-hidden"
+              style={{
+                width:
+                  gif.media_formats.tinygif.dims[0] > 200 ? '100%' : 'auto', // Adjust width based on image
+              }}
+            >
+              <Image
+                src={gif.media_formats.tinygif.url} // Use tinygif for faster loading
+                alt="Tenor GIF"
+                width={gif.media_formats.tinygif.dims[0]} // Tenor-provided width
+                height={gif.media_formats.tinygif.dims[1]} // Tenor-provided height
+                className="w-full h-auto cursor-pointer hover:scale-105 transition-transform"
+                unoptimized // No external optimization for Tenor CDN
+                priority={index < 2} // Prioritize first 2 for mobile LCP
+                onClick={() => casting(gif.media_formats.gif.url)} // Use full-sized gif for cast
+              />
+            </div>
+          ))
+        ) : (
+          !loading && <p className="text-gray-500 text-sm">No GIFs found</p>
+        )}
+      </Masonry>
       {loading && (
         <div className="mt-4 flex justify-center">
           <div className="animate-spin h-5 w-5 border-2 border-blue-500 rounded-full border-t-transparent"></div>
