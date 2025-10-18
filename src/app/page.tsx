@@ -1,7 +1,5 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import App from "@/app/app";
-
 
 const appUrl = process.env.NEXT_PUBLIC_URL;
 
@@ -45,8 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full p-4 bg-slate-800">
-
+    <div className="min-h-screen w-full bg-slate-800">
       <App />
     </div>
   );

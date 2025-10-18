@@ -8,6 +8,9 @@ import { useSearchParams } from "next/navigation";
 import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 import "react-farcaster-embed/dist/styles.css";
 import Masonry from "react-masonry-css";
+import CheckInComponent from "@/components/wallet";
+import Connect from "./Connect";
+import { useAccount } from "wagmi";
 
 interface TenorGif {
   id: string;
@@ -22,6 +25,8 @@ export default function GiphySearch() {
   const [context, setContext] = useState<Context.MiniAppContext>();
   const [showPopup, setShowPopup] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
+
+  const { isConnected } = useAccount();
 
   useEffect(() => {
     const load = async () => {
@@ -164,7 +169,7 @@ export default function GiphySearch() {
     try {
       await sdk.actions.composeCast({
         text: "Quote, reply & cast with a GIF with this miniapp by @cashlessman.eth",
-        embeds: ["https://fc-gif.vercel.app"],
+        embeds: [`${process.env.NEXT_PUBLIC_URL}`],
         close: true,
       });
     } catch (error) {
@@ -203,31 +208,19 @@ export default function GiphySearch() {
       fetchProfile(castFid);
       setShowPopup(true);
     }
-  }, [context]);
+  }, [context, castFid, fetchProfile]);
 
-  if (!context)
+  if (isConnected) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-900">
-        <div className="flex flex-col items-center justify-center text-white text-2xl p-4">
-          <p className="flex items-center justify-center text-center">
-            You need to access this mini app from inside a farcaster client
-          </p>
-          <div
-            className="flex items-center justify-center text-center bg-indigo-800 p-3 rounded-lg mt-4 cursor-pointer"
-            onClick={() =>
-              window.open("https://farcaster.xyz/cashlessman.eth/0x094169d9")
-            }
-          >
-            Open in Farcaster
-          </div>
-        </div>
+      <div className="flex items-center justify-center h-screen w-full">
+        <Connect />
       </div>
     );
-
+  }
   return (
     <div className="">
       <header>
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-row justify-between pt-2 px-3">
           <button
             onClick={share}
             className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition cursor-pointer font-semibold"
@@ -245,6 +238,7 @@ export default function GiphySearch() {
             how to reply/quote cast
           </button>
         </div>
+        <CheckInComponent />
       </header>
       <QuoteOrReply />
       {castHash && profileData?.username && (
@@ -264,7 +258,7 @@ export default function GiphySearch() {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearchTerm(e.target.value)
         }
-        className="w-full max-w-md p-2 mb-4 text-lg border border-gray-300 rounded text-white"
+        className="w-9/10 p-2 mb-4 text-lg border border-gray-300 rounded text-white bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mx-auto block"
       />
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
