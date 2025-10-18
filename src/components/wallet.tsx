@@ -348,7 +348,7 @@ const CheckInComponent: React.FC = () => {
           )}
 
         {isConfirmed && (
-          <p className="text-green-600 mt-4">You can Check in again tommorow</p>
+          <p className="text-green-600 mt-4 text-center">You can Check in again tommorow</p>
         )}
       </>
     </div>
