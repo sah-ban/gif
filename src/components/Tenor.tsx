@@ -210,7 +210,7 @@ export default function GiphySearch() {
     }
   }, [context, castFid, fetchProfile]);
 
-  if (isConnected) {
+  if (!isConnected) {
     return (
       <div className="flex items-center justify-center h-screen w-full">
         <Connect />
