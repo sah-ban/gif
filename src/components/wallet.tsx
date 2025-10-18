@@ -26,7 +26,7 @@ const CheckInComponent: React.FC = () => {
   const { address, chainId } = useAccount();
   const { switchChainAsync } = useSwitchChain();
 
-  const { writeContract, data: hash, error, isPending } = useWriteContract();
+  const { writeContract, data: hash, isPending } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({ hash });
 
@@ -347,7 +347,6 @@ const CheckInComponent: React.FC = () => {
             </div>
           )}
 
-        {error && <p className="text-red-600 mt-4">Error: {error.message}</p>}
         {isConfirmed && (
           <p className="text-green-600 mt-4">You can Check in again tommorow</p>
         )}
