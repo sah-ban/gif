@@ -11,6 +11,7 @@ import Masonry from "react-masonry-css";
 import CheckInComponent from "@/components/wallet";
 import Connect from "./Connect";
 import { useAccount } from "wagmi";
+import { blocked } from "./blocked";
 
 interface TenorGif {
   id: string;
@@ -238,7 +239,8 @@ export default function GiphySearch() {
             how to reply/quote cast
           </button>
         </div>
-        <CheckInComponent />
+        {context?.client.clientFid === 9152 &&
+          !blocked.includes(context?.user.fid) && <CheckInComponent />}
       </header>
       <QuoteOrReply />
       {castHash && profileData?.username && (
@@ -258,7 +260,7 @@ export default function GiphySearch() {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearchTerm(e.target.value)
         }
-        className="w-9/10 p-2 mb-4 text-lg border border-gray-300 rounded text-white bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mx-auto block"
+        className="w-9/10 p-2 mb-3 mt-2 text-lg border border-gray-300 rounded text-white bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mx-auto block"
       />
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
