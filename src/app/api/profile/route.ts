@@ -3,7 +3,6 @@ import axios from "axios";
 
 export async function GET(req: NextRequest) {
   const fid = req.nextUrl.searchParams.get("fid");
-  console.log(`Requested fid: ${fid}`);
 
   try {
     const apiUrl = `https://api.farcaster.xyz/v2/user?fid=${fid}`;
