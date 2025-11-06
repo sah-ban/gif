@@ -11,6 +11,7 @@ import CheckInStreakABI from "@/contracts/abi.json";
 import USDCABI from "@/contracts/USDC.json";
 import { Hash } from "viem";
 import { base } from "wagmi/chains";
+import sdk from "@farcaster/miniapp-sdk";
 
 const CONTRACT_ADDRESS: Address = "0xAf000E392b9911590df4e132fF9151f6C4c65156";
 const USDC_ADDRESS: Address = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
@@ -168,6 +169,7 @@ const CheckInComponent: React.FC = () => {
 
   useEffect(() => {
     if (isConfirmed) {
+      sdk.haptics.notificationOccurred("success");
       refetchCurrentStreak();
       refetchLongestStreak();
     }
