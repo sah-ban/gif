@@ -39,14 +39,14 @@ const CheckInComponent: React.FC = () => {
   });
 
   // Read lastCheckInDay
-  const { data: lastCheckInDay, refetch: refetchLastCheckInDay } =
+  const { data: lastCheckInDay } =
     useReadContract({
       address: CONTRACT_ADDRESS,
       abi: CheckInStreakABI,
       functionName: "getLastCheckInDay",
       args: [address],
       query: { staleTime: 0 },
-    }) as { data: bigint | undefined; refetch: () => void };
+    }) as { data: bigint | undefined };
 
   // Read current streak
   const { data: currentStreak, refetch: refetchCurrentStreak } =
@@ -110,9 +110,6 @@ const CheckInComponent: React.FC = () => {
         functionName: "checkIn",
         chainId: BASE_CHAIN_ID,
       });
-      refetchLastCheckInDay();
-      refetchCurrentStreak();
-      refetchLongestStreak();
     } catch (err) {
       console.error("Check-in error:", err);
     }
