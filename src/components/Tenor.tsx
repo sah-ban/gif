@@ -179,10 +179,10 @@ export default function GiphySearch() {
   };
 
   useEffect(() => {
-    if (!context?.client.added) {
+    if (context?.client.clientFid === 9152 && !context?.client.added) {
       sdk.actions.addFrame();
     }
-  }, [context?.client.added]);
+  }, [context?.client.added, context?.client.clientFid]);
 
   interface ProfileResponse {
     username: string;
