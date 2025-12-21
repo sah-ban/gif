@@ -12,6 +12,7 @@ import CheckInComponent from "@/components/wallet";
 import Connect from "./Connect";
 import { useAccount } from "wagmi";
 import { blocked } from "./blocked";
+import SupportDeveloperCard from "./SupportDeveloperCard";
 
 interface TenorGif {
   id: string;
@@ -237,23 +238,12 @@ export default function GiphySearch() {
                 embeds: [`${process.env.NEXT_PUBLIC_URL}`],
               })
             }
-            className="
-      h-11 w-11
-      flex items-center justify-center
-      rounded-full
-      bg-pink-500/80 backdrop-blur-md
-      border border-pink-300/40
-        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
-      hover:bg-pink-500
-      active:scale-90
-      transition-all duration-200
-      cursor-pointer
-    "
+            className="bg-white transition p-2 rounded-xl flex items-center justify-center cursor-pointer"
+            title="Share this miniapp"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              fill="white"
               className="w-5 h-5"
             >
               <path
@@ -266,39 +256,12 @@ export default function GiphySearch() {
           {!context?.client.added ? (
             <button
               onClick={() => sdk.actions.addMiniApp()}
-              className="
-        h-11
-        px-3
-        rounded-full
-        bg-gradient-to-r from-pink-500 to-pink-600
-        text-white text-sm font-semibold
-        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
-        hover:brightness-110
-        active:scale-95
-        transition-all duration-200
-        whitespace-nowrap
-      "
+              className="bg-white text-slate-900 px-2 py-2 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
             >
-              Add Miniapp
+              Add MiniApp
             </button>
           ) : (
-            <button
-              onClick={() => sdk.actions.viewProfile({ fid: 268438 })}
-              className="
-        h-11
-        px-3
-        rounded-full
-        bg-gradient-to-r from-pink-500 to-pink-600
-        text-white text-sm font-semibold
-        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
-        hover:brightness-110
-        active:scale-95
-        transition-all duration-200
-        whitespace-nowrap
-      "
-            >
-              Dev Profile
-            </button>
+            <SupportDeveloperCard />
           )}
 
           {/* Action Button */}
@@ -309,37 +272,12 @@ export default function GiphySearch() {
                   hash: "0xc000a48e2836034ad4338e825a33809cdd487b53",
                 })
               }
-              className="
-        h-11
-        px-3
-        rounded-full
-        bg-gradient-to-r from-pink-500 to-pink-600
-        text-white text-sm font-semibold
-        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
-        hover:brightness-110
-        active:scale-95
-        transition-all duration-200
-        whitespace-nowrap
-      "
+              className="bg-white text-slate-900 px-4 py-2 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
             >
               How to reply / quote
             </button>
           ) : (
-            <button
-              className="
-        h-11
-        px-3
-        rounded-full
-        bg-pink-500/60
-        border border-pink-300/40
-        text-white/90 text-sm font-medium
-        shadow-[inset_0_0_0.5px_rgba(255,255,255,0.35),0_6px_18px_rgba(236,72,153,0.35)]
-        hover:bg-pink-500/80
-        active:scale-95
-        transition-all duration-200
-        whitespace-nowrap
-      "
-            >
+            <button className="bg-white text-slate-900 px-2 py-2 rounded-xl font-semibold shadow-lg hover:scale-105 transition">
               Long press to copy GIF URL
             </button>
           )}
