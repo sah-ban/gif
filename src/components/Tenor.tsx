@@ -166,24 +166,6 @@ export default function GiphySearch() {
     }
   };
 
-  const share = async () => {
-    try {
-      await sdk.actions.composeCast({
-        text: "Quote, reply & cast with a GIF with this miniapp by @cashlessman.eth",
-        embeds: [`${process.env.NEXT_PUBLIC_URL}`],
-        close: true,
-      });
-    } catch (error) {
-      console.error("Error composing cast:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (context?.client.clientFid === 9152 && !context?.client.added) {
-      sdk.actions.addFrame();
-    }
-  }, [context?.client.added, context?.client.clientFid]);
-
   interface ProfileResponse {
     username: string;
   }
@@ -247,24 +229,122 @@ export default function GiphySearch() {
   return (
     <div className="">
       <header>
-        <div className="flex flex-row justify-between pt-2 px-3">
-          <button
-            onClick={share}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition cursor-pointer font-semibold"
-          >
-            Share Miniapp
-          </button>
-          <button
+        <div className="flex items-center justify-between px-3 pt-2 gap-2">
+          <div
             onClick={() =>
-              sdk.actions.viewCast({
-                hash: "0xc000a48e2836034ad4338e825a33809cdd487b53",
+              sdk.actions.composeCast({
+                text: "Quote, reply & cast with a GIF with this miniapp by @cashlessman.eth",
+                embeds: [`${process.env.NEXT_PUBLIC_URL}`],
               })
             }
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition cursor-pointer "
+            className="
+      h-11 w-11
+      flex items-center justify-center
+      rounded-full
+      bg-pink-500/80 backdrop-blur-md
+      border border-pink-300/40
+        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
+      hover:bg-pink-500
+      active:scale-90
+      transition-all duration-200
+      cursor-pointer
+    "
           >
-            how to reply/quote cast
-          </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="white"
+              className="w-5 h-5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M15.75 4.5a3 3 0 1 1 .825 2.066l-8.421 4.679a3.002 3.002 0 0 1 0 1.51l8.421 4.679a3 3 0 1 1-.729 1.31l-8.421-4.678a3 3 0 1 1 0-4.132l8.421-4.679a3 3 0 0 1-.096-.755Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          {!context?.client.added ? (
+            <button
+              onClick={() => sdk.actions.addMiniApp()}
+              className="
+        h-11
+        px-3
+        rounded-full
+        bg-gradient-to-r from-pink-500 to-pink-600
+        text-white text-sm font-semibold
+        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
+        hover:brightness-110
+        active:scale-95
+        transition-all duration-200
+        whitespace-nowrap
+      "
+            >
+              Add Miniapp
+            </button>
+          ) : (
+            <button
+              onClick={() => sdk.actions.viewProfile({ fid: 268438 })}
+              className="
+        h-11
+        px-3
+        rounded-full
+        bg-gradient-to-r from-pink-500 to-pink-600
+        text-white text-sm font-semibold
+        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
+        hover:brightness-110
+        active:scale-95
+        transition-all duration-200
+        whitespace-nowrap
+      "
+            >
+              Dev Profile
+            </button>
+          )}
+
+          {/* Action Button */}
+          {context?.client.clientFid === 9152 ? (
+            <button
+              onClick={() =>
+                sdk.actions.viewCast({
+                  hash: "0xc000a48e2836034ad4338e825a33809cdd487b53",
+                })
+              }
+              className="
+        h-11
+        px-3
+        rounded-full
+        bg-gradient-to-r from-pink-500 to-pink-600
+        text-white text-sm font-semibold
+        shadow-[0_8px_30px_rgba(236,72,153,0.55)]
+        hover:brightness-110
+        active:scale-95
+        transition-all duration-200
+        whitespace-nowrap
+      "
+            >
+              How to reply / quote
+            </button>
+          ) : (
+            <button
+              className="
+        h-11
+        px-3
+        rounded-full
+        bg-pink-500/60
+        border border-pink-300/40
+        text-white/90 text-sm font-medium
+        shadow-[inset_0_0_0.5px_rgba(255,255,255,0.35),0_6px_18px_rgba(236,72,153,0.35)]
+        hover:bg-pink-500/80
+        active:scale-95
+        transition-all duration-200
+        whitespace-nowrap
+      "
+            >
+              Long press to copy GIF URL
+            </button>
+          )}
         </div>
+
         {context?.client.clientFid === 9152 &&
           !blocked.includes(context?.user.fid) && <CheckInComponent />}
       </header>
