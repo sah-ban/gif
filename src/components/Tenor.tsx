@@ -211,6 +211,10 @@ export default function GiphySearch() {
     }
   }, [context, castFid, fetchProfile]);
 
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const longPressTriggered = useRef(false);
+  const longPressTime = 1200;
+
   if (!context)
     return (
       <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -310,6 +314,35 @@ export default function GiphySearch() {
                   unoptimized // No external optimization for Tenor CDN
                   priority={index < 2} // Prioritize first 2 for mobile LCP
                   onClick={() => casting(gif.media_formats.gif.url)} // Use full-sized gif for cast
+                  onMouseDown={() => {
+                    longPressTriggered.current = false;
+                    timerRef.current = setTimeout(async () => {
+                      longPressTriggered.current = true;
+                      await navigator.clipboard.writeText(
+                        gif.media_formats.gif.url
+                      );
+                      sdk.actions.close();
+                    }, longPressTime);
+                  }}
+                  onMouseUp={() => {
+                    if (timerRef.current) clearTimeout(timerRef.current);
+                  }}
+                  onMouseLeave={() =>
+                    timerRef.current && clearTimeout(timerRef.current)
+                  }
+                  onTouchStart={() => {
+                    longPressTriggered.current = false;
+                    timerRef.current = setTimeout(async () => {
+                      longPressTriggered.current = true;
+                      await navigator.clipboard.writeText(
+                        gif.media_formats.gif.url
+                      );
+                      sdk.actions.close();
+                    }, longPressTime);
+                  }}
+                  onTouchEnd={() => {
+                    if (timerRef.current) clearTimeout(timerRef.current);
+                  }}
                 />
               </div>
             ))
