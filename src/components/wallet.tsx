@@ -221,7 +221,7 @@ const CheckInComponent: React.FC = () => {
   }, [isApproved, depositAmount, writeContract]);
 
   return (
-    <div className="p-2 rounded-lg shadow-md text-black">
+    <div className="p-2 rounded-lg shadow-md text-black text-sm">
       <>
         <div className="flex flex-row justify-between p-2  bg-white rounded-lg shadow">
           <div>
