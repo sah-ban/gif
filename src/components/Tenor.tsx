@@ -198,6 +198,12 @@ export default function GiphySearch() {
   const longPressTriggered = useRef(false);
   const longPressTime = 1200;
 
+  useEffect(() => {
+    if (context?.client.clientFid === 9152 && !context?.client.added) {
+      sdk.actions.addMiniApp();
+    }
+  }, [context?.client.added, context?.client.clientFid]);
+
   if (!context)
     return (
       <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -253,16 +259,8 @@ export default function GiphySearch() {
               />
             </svg>
           </div>
-          {!context?.client.added ? (
-            <button
-              onClick={() => sdk.actions.addMiniApp()}
-              className="bg-white text-slate-900 px-2 py-2 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
-            >
-              Add MiniApp
-            </button>
-          ) : (
-            <SupportDeveloperCard />
-          )}
+
+          <SupportDeveloperCard />
 
           {/* Action Button */}
           {context?.client.clientFid === 9152 ? (
