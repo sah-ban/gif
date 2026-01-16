@@ -8,10 +8,6 @@ import { useSearchParams } from "next/navigation";
 import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 import "react-farcaster-embed/dist/styles.css";
 import Masonry from "react-masonry-css";
-import CheckInComponent from "@/components/wallet";
-import Connect from "./Connect";
-import { useAccount } from "wagmi";
-import { blocked } from "./blocked";
 import SupportDeveloperCard from "./SupportDeveloperCard";
 
 interface TenorGif {
@@ -27,8 +23,6 @@ export default function GiphySearch() {
   const [context, setContext] = useState<Context.MiniAppContext>();
   const [showPopup, setShowPopup] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
-
-  const { isConnected } = useAccount();
 
   useEffect(() => {
     const load = async () => {
@@ -226,13 +220,6 @@ export default function GiphySearch() {
       </div>
     );
 
-  if (!isConnected) {
-    return (
-      <div className="flex items-center justify-center h-screen w-full">
-        <Connect />
-      </div>
-    );
-  }
   return (
     <div className="">
       <header>
@@ -280,9 +267,6 @@ export default function GiphySearch() {
             </button>
           )}
         </div>
-
-        {context?.client.clientFid === 9152 &&
-          !blocked.includes(context?.user.fid) && <CheckInComponent />}
       </header>
       <QuoteOrReply />
       {castHash && profileData?.username && (
