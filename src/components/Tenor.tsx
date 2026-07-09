@@ -180,9 +180,6 @@ export default function GiphySearch() {
     }
   }, [context, castFid, fetchProfile]);
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const longPressTriggered = useRef(false);
-  const longPressTime = 1200;
 
   useEffect(() => {
     if (context?.client.clientFid === 9152 && !context?.client.added) {
@@ -222,7 +219,7 @@ export default function GiphySearch() {
           <SupportDeveloperCard />
 
           {/* Action Button */}
-          {context?.client.clientFid === 9152 ? (
+          {context?.client.clientFid === 9152 && (
             <button
               onClick={() =>
                 sdk.actions.viewCast({
@@ -232,10 +229,6 @@ export default function GiphySearch() {
               className="bg-white text-slate-900 px-4 py-2 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
             >
               How to reply / quote
-            </button>
-          ) : (
-            <button className="bg-white text-slate-900 px-2 py-2 rounded-xl font-semibold shadow-lg hover:scale-105 transition">
-              Long press to copy GIF URL
             </button>
           )}
         </div>
@@ -286,35 +279,6 @@ export default function GiphySearch() {
                   unoptimized // No external optimization for Tenor CDN
                   priority={index < 2} // Prioritize first 2 for mobile LCP
                   onClick={() => casting(gif.media_formats.gif.url)} // Use full-sized gif for cast
-                  onMouseDown={() => {
-                    longPressTriggered.current = false;
-                    timerRef.current = setTimeout(async () => {
-                      longPressTriggered.current = true;
-                      await navigator.clipboard.writeText(
-                        gif.media_formats.gif.url
-                      );
-                      sdk.actions.close();
-                    }, longPressTime);
-                  }}
-                  onMouseUp={() => {
-                    if (timerRef.current) clearTimeout(timerRef.current);
-                  }}
-                  onMouseLeave={() =>
-                    timerRef.current && clearTimeout(timerRef.current)
-                  }
-                  onTouchStart={() => {
-                    longPressTriggered.current = false;
-                    timerRef.current = setTimeout(async () => {
-                      longPressTriggered.current = true;
-                      await navigator.clipboard.writeText(
-                        gif.media_formats.gif.url
-                      );
-                      sdk.actions.close();
-                    }, longPressTime);
-                  }}
-                  onTouchEnd={() => {
-                    if (timerRef.current) clearTimeout(timerRef.current);
-                  }}
                 />
               </div>
             ))
