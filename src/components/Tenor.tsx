@@ -52,20 +52,12 @@ export default function GiphySearch() {
 
   const fetchGifs = useCallback(
     async (query: string, pos: string | null) => {
-      if (!key) {
-        setError("Tenor API key is missing");
-        return;
-      }
       setLoading(true);
       setError(null);
       try {
         const url = query
-          ? `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(
-              query
-            )}&key=${key}&pos=${pos || ""}&limit=20`
-          : `https://tenor.googleapis.com/v2/featured?key=${key}&pos=${
-              pos || ""
-            }&limit=20`;
+          ? `/api/tenor?path=search&q=${encodeURIComponent(query)}&pos=${pos || ""}`
+          : `/api/tenor?path=featured&pos=${pos || ""}`;
         const response = await axios.get(url);
         const data = response.data;
         console.log(
@@ -198,27 +190,7 @@ export default function GiphySearch() {
     }
   }, [context?.client.added, context?.client.clientFid]);
 
-  if (!context)
-    return (
-      <div className="flex items-center justify-center h-screen bg-gray-900">
-        <div className="flex flex-col items-center justify-center text-white text-2xl p-4">
-          <p className="flex items-center justify-center text-center">
-            You need to access this mini app from inside a farcaster client
-          </p>
-          <div
-            className="flex items-center justify-center text-center bg-indigo-800 p-3 rounded-lg mt-4 cursor-pointer"
-            onClick={() =>
-              window.open(
-                "https://farcaster.xyz/miniapps/8vm2jc2faIFU/gif",
-                "_blank"
-              )
-            }
-          >
-            Open in Farcaster
-          </div>
-        </div>
-      </div>
-    );
+
 
   return (
     <div className="">
