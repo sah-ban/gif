@@ -253,7 +253,7 @@ export default function GiphySearch() {
       )}
       <input
         type="text"
-        placeholder="Search Tenor"
+        placeholder="Search for a GIF"
         value={searchTerm}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearchTerm(e.target.value)
